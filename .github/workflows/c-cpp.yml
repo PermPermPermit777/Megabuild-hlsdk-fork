@@ -1,10 +1,6 @@
 name: Build & Deploy HLSDK
 on:
-  push:
   pull_request:
-  schedule:
-    # Rebuild every two days at 03:17 UTC to pick up upstream hlsdk-portable changes
-    - cron: '17 3 */2 * *'
   workflow_dispatch:
 jobs:
 
