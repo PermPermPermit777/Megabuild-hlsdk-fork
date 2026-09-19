@@ -18,30 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # GNU/Linux systems
-          - os: ubuntu-22.04
-            targetos: linux
-            targetarch: amd64
-          - os: ubuntu-22.04
-            targetos: linux
-            targetarch: i386
-          - os: ubuntu-22.04-arm
-            targetos: linux
-            targetarch: arm64
-          - os: ubuntu-22.04-arm
-            targetos: linux
-            targetarch: armhf
-          - os: ubuntu-24.04 # riscv64 would benefit from having latest compilers
-            targetos: linux
-            targetarch: riscv64
-
-          # Game console systems
-          - os: ubuntu-latest
-            targetos: nswitch
-            targetarch: arm64
-          - os: ubuntu-latest
-            targetos: psvita
-            targetarch: armv7hf
 
           # Android systems
           - os: ubuntu-latest
@@ -56,34 +32,6 @@ jobs:
           - os: ubuntu-latest
             targetos: android
             targetarch: armv7l
-
-          # Windows systems
-          - os: windows-latest # can be built on GitHub VMs, with relatively latest compiler
-            targetos: win32
-            targetarch: amd64
-
-          # Disabled 32-bit Windows until somebody proves me that we do in fact want 32-bit
-          # Windows builds, considering that all mods support it in the first place
-
-          # - os: self-hosted # built with older MSVC in Wine to target XP
-          #   targetos: win32
-          #   targetarch: i386
-
-
-          # macOS systems, built on GitHub macOS VMs
-          - os: macos-latest # arm64 as per github documentation
-            targetos: apple
-            targetarch: arm64
-
-          # Disabled due to enormous build times
-          # - os: macos-15-intel # x86 as per github documentation (will they fix it before they deprecate this version?..)
-          #  targetos: apple
-          #  targetarch: amd64
-
-          # iOS systems, built on GitHub macOS VMs
-          - os: macos-latest # arm64 as per github documentation
-            targetos: ios
-            targetarch: arm64
     env:
       YQ_VERSION: 4.53.3
       GH_CPU_OS: ${{ matrix.targetos }}
@@ -109,13 +57,7 @@ jobs:
           ccache-${{ matrix.targetos }}-${{ matrix.targetarch }}-
     - name: Install dependencies
       run: bash scripts/gha/${{ runner.environment }}/deps_${{ matrix.targetos }}.sh
-    - name: Set developer command prompt
-      # puts cl.exe into PATH so cmake can use Ninja and route it through
-      # ccache, see build_common.sh
-      if: matrix.targetos == 'win32'
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x64
+    
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
