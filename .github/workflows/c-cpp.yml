@@ -136,22 +136,6 @@ jobs:
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-apple-arm64.zip
         sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-linux-amd64.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-linux-arm64.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-linux-armhf.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-linux-i386.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-linux-riscv64.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-nswitch-arm64.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-psvita-armv7hf.zip
-        sleep 5s
-        gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
-        sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-ios-arm64.zip
     - name: Evict superseded ccache generations
       env:
